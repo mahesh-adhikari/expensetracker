@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
-import Search from "./views/Search.vue"
+import Dashboard from "./views/dashboard.vue";
 
 Vue.use(Router);
 
@@ -10,28 +9,38 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/",
-      name: "home",
-      component: Home
-    },
-    {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
-    },
-    {
       path: "/login",
       name: "login",
       component: () => import("./views/login.vue")
     },
     {
-      path: "/search",
-      name: "search",
-      component: Search //() => import("./views/Search.vue")
+      path: "/",
+      name: "dashboard",
+      component: Dashboard
+    },
+    {
+      path: "/daily",
+      name: "daily",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/daily.vue")
+    },
+    {
+      path: "/monthly",
+      name: "monthly",
+      component: () => import("./views/monthly.vue")
+    },
+    {
+      path: "/yearly",
+      name: "yearly",
+      component: () => import("./views/yearly.vue")
+    },
+    {
+      path: "/stats",
+      name: "stats",
+      component: () => import("./views/stats.vue")
     }
   ]
 });

@@ -1,40 +1,53 @@
 <template>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center fixed-top">        
-        <a class="navbar-brand text-white" href="#"> PF REST APPLICATION </a>    
-        <!-- Toggler/collapsible button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dualCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- Navbar links -->
-        <div class="collapse navbar-collapse dualCollapse">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <router-link to="/" class="nav-link">Home</router-link> 
-                </li>
-                <li class="nav-item"><router-link to="/about"  class="nav-link">About</router-link></li>
-                <li class="nav-item"><router-link to="/search" class="nav-link">Search</router-link></li>
-            </ul>
-            <div class="justify-content-end navbar-collapse collapse dualCollapse">
-                <ul class="navbar-nav">
-                    <li>
-                        <button class="btn btn-sm btn-outline-danger nav-link" @click="logmeout">Logout</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <b-navbar toggleable="md" type="dark" variant="secondary">
+    <b-navbar-brand to="/">EXPENSE TRACKER</b-navbar-brand>
+
+    <b-navbar-toggle target="nav_collapse" />
+
+    <b-collapse is-nav id="nav_collapse">
+      <b-navbar-nav>
+       <!-- <b-nav-item to="/" exact>DASHBOARD</b-nav-item>-->
+        <b-nav-item to="/daily" exact>DAILY</b-nav-item>
+        <b-nav-item to="/monthly" exact>MONTHLY</b-nav-item>
+        <b-nav-item to="/yearly" exact>YEARLY</b-nav-item>
+        <b-nav-item to="/stats" exact>STATS</b-nav-item>
+      </b-navbar-nav>
+
+      <!-- Right aligned nav items -->
+      <b-navbar-nav class="ml-auto">   
+        <b-nav-item @click="logmeout">Logout</b-nav-item>
+       <!-- <b-nav-item-dropdown text="Lang" right>
+          <b-dropdown-item href="#">EN</b-dropdown-item>
+          <b-dropdown-item href="#">ES</b-dropdown-item>
+          <b-dropdown-item href="#">RU</b-dropdown-item>
+          <b-dropdown-item href="#">FA</b-dropdown-item>
+        </b-nav-item-dropdown>
+
+        <b-nav-item-dropdown right>
+          <template slot="button-content"><em>User</em></template>
+          <b-dropdown-item href="#">Contacts</b-dropdown-item>
+          <b-dropdown-item @click="logmeout">Logout</b-dropdown-item>
+        </b-nav-item-dropdown>-->
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
 </template>
 
 <script>
 export default {
-
-    methods: {
-        logmeout(){
-            console.log("emitting logmeout event from navbar")
-            this.$emit("logmeout");
-        }
+  methods: {
+    logmeout() {
+      console.log("emitting logmeout event from navbar");
+      this.$emit("logmeout");
     }
-}
-
-
+  }
+};
 </script>
+
+<style>
+  .nav-link.active{
+    background: lightseagreen;
+    border-radius: 6px;
+  }
+</style>
+
