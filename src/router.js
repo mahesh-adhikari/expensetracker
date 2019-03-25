@@ -14,7 +14,12 @@ export default new Router({
       component: () => import("./views/login.vue")
     },
     {
-      path: "/",
+      path: "/signup",
+      name: "signup",
+      component: () => import("./views/signup.vue")
+    },
+    {
+      path: "/dashboard",
       name: "dashboard",
       component: Dashboard
     },
@@ -26,6 +31,11 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/daily.vue")
+    },
+    {
+      path: "/newdaily",
+      name: "newdaily",
+      component: () => import("./views/newdaily.vue")
     },
     {
       path: "/monthly",

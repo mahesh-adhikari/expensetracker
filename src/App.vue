@@ -51,7 +51,7 @@ export default {
   methods: {
     logout() {
       //this.authenticated = false;
-      console.log("session exists:", this.$session.exists());
+      //console.log("session exists:", this.$session.exists());
       this.authenticated = false;
       this.$session.destroy();
       this.$router.push("/login");

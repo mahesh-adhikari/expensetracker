@@ -1,35 +1,50 @@
 <template>
   <div>    
     <TopHeader type="daily" @changed="dateChanged"/>
-    <table class="table table-striped">
-      <thead>
-        <th>Title</th>
-        <th>Expense</th>
-        <th>Category</th>
-        <th></th>
-      </thead>
-      <tbody>
-        <tr v-for="daily in dailyentries" :id="daily.id">
-          <td><input type="text" class="bg-transparent border-0" readonly="readonly" v-model="daily.title"></td>
-          <td>{{daily.expense}}</td>
-          <td>{{daily.category}}</td>
-          <td>
-            <button class="btn btn-outline-primary mr-2">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="btn btn-outline-danger">
-              <i class="fas fa-trash"></i>
-            </button>
-          </td>
-        </tr>
-        <tr class="font-weight-bold text-white bg-secondary">
-          <td>Total</td>
-          <td>{{total}}</td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="lower">
+      <div class="total-section pr-3 text-right">
+        <h3 class="text-info">Total: <span class="badge badge-secondary">{{total}} </span>
+          <button class="btn btn-primary ml-2" @click="$router.replace('/newdaily')">
+            <span class="fa fa-plus"></span>
+             Add New
+          </button>
+        </h3>
+      </div>
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Expense</th>
+            <th>Category</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="daily in dailyentries" :key="daily.id">
+            <td><input type="text" class="bg-transparent border-0" readonly="readonly" v-model="daily.title"></td>
+            <td>{{daily.expense}}</td>
+            <td>{{daily.category}}</td>
+            <td>
+              <button class="btn btn-outline-primary mr-2">
+                <i class="fas fa-edit"></i>
+              </button>
+              <b-button variant="outline-danger" v-b-modal="'questionModal'" @click="selected(daily.id)">
+                <i class="fas fa-trash"></i>
+              </b-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Modal Component -->
+      <b-modal
+        id="questionModal"
+        ref="modal"
+        title="Delete Entry!!"
+        @ok="deleteOk"
+      >
+        Are you sure you want to delete this record?
+      </b-modal>
+    </div>
   </div>
 </template>
 
@@ -56,7 +71,8 @@ export default {
   data(){
     return {
       total : 0,
-      current: new Date()
+      current: new Date(),
+      selectedRow: 0
     }
   },
   computed: {
@@ -69,10 +85,15 @@ export default {
     }
   },
   methods: {
-    dateChanged(newdate){      
-      console.log("new date:", newdate)
+    dateChanged(newdate){  
       this.current = new Date(newdate);
-      this.total = this.current.getDate();
+      this.total   = this.current.getDate();
+    },
+    selected(key){
+      this.selectedRow = key;
+    },
+    deleteOk(){
+      console.log(this.selectedRow + " will be deleted")
     }
   }
 };

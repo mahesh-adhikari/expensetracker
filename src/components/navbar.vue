@@ -1,6 +1,6 @@
 <template>
     <b-navbar toggleable="md" type="dark" variant="secondary">
-    <b-navbar-brand to="/">EXPENSE TRACKER</b-navbar-brand>
+    <b-navbar-brand to="/dashboard">EXPENSE TRACKER</b-navbar-brand>
 
     <b-navbar-toggle target="nav_collapse" />
 
@@ -10,12 +10,13 @@
         <b-nav-item to="/daily" exact>DAILY</b-nav-item>
         <b-nav-item to="/monthly" exact>MONTHLY</b-nav-item>
         <b-nav-item to="/yearly" exact>YEARLY</b-nav-item>
-        <b-nav-item to="/stats" exact>STATS</b-nav-item>
+        <b-nav-item to="/stats" exact><span class="fa fa-chart-bar"></span> STATS</b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">   
-        <b-nav-item @click="logmeout">Logout</b-nav-item>
+        <b-nav-text><span class="fa fa-user"></span> Mahesh</b-nav-text>
+        <b-nav-item @click="logmeout"><span class="fa fa-sign-out-alt"></span> Logout</b-nav-item>
        <!-- <b-nav-item-dropdown text="Lang" right>
           <b-dropdown-item href="#">EN</b-dropdown-item>
           <b-dropdown-item href="#">ES</b-dropdown-item>

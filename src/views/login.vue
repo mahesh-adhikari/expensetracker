@@ -21,6 +21,8 @@
 					<input type="password" class="form-control" v-model="input.password" id="password" required>
 					<br>
 					<button class="form-control btn btn-primary font-bold" v-on:click="login()">Login</button>
+          <hr>
+          <p class="text-warning">Don't have an account? You can create from <router-link to="/signup">here</router-link></p>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-3 col-sm-3 col-xs-2"></div>
@@ -30,6 +32,9 @@
 
 <script>
 import Vue from "vue";
+import firebase from "firebase";
+import etmixin  from "@/mixins/etmixin"
+
 export default {
   data() {
     return {
@@ -40,6 +45,7 @@ export default {
       }
     };
   },
+  mixins: [etmixin],
   beforeCreate() {
     console.log("login beforeCreate");
     if (this.$session.exists()) {
@@ -57,7 +63,7 @@ export default {
           this.$session.start();
           //console.log(this.$router)
           this.$parent.authenticated = true;
-          this.$router.push("/");
+          this.$router.push("/dashboard");
           this.loginerror = false;
         } else {
           console.log("The username and/or password is incorrect");
