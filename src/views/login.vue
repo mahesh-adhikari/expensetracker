@@ -33,7 +33,6 @@
 <script>
 import Vue from "vue";
 import firebase from "firebase";
-import etmixin  from "@/mixins/etmixin"
 
 export default {
   data() {
@@ -45,7 +44,6 @@ export default {
       }
     };
   },
-  mixins: [etmixin],
   beforeCreate() {
     console.log("login beforeCreate");
     if (this.$session.exists()) {

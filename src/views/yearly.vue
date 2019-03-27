@@ -1,6 +1,6 @@
 <template>
     <div id="yearly-overview">
-        <TopHeader type="yearly" @changed="dateChanged"/>
+        <TopHeader type="yearly" />
         <div>
             <h3 class="text-right">Total Expense: <span class="badge badge-secondary">{{total}}</span></h3>
             <table class="table table-sm table-striped">
@@ -28,12 +28,15 @@
 </template>
 
 <script>
-import header   from '@/components/header';
+import header  from '@/components/header';
+import etmixin from "@/mixins/etmixin";
+
 export default {
     name: "Yearly",
     components:{
       TopHeader : header
     },
+    mixins: [etmixin],
     data(){
         return {
             months : ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -56,10 +59,7 @@ export default {
         }
     },
     methods: {
-        dateChanged(newdate){  
-        this.current = new Date(newdate).getFullYear();
-        this.total   = this.current;
-        }
+        
     }
 };
 </script>

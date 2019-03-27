@@ -10,14 +10,12 @@
             </div>
             <div class="form-group">
                 <label for="expense">Expense</label>
-                <input type="number" class="form-control" placeholder="Expense" v-model="newentry.expense">
+                <input type="number" class="form-control" placeholder="Expense" v-model.number="newentry.expense">
             </div>
             <div class="form-group">
                 <label for="category">Category</label>
-                    <select name="category" id="category" class="form-control" v-model="newentry.category">
-                    <option value="food">Food</option>
-                    <option value="travel">Travel</option>
-                    <option value="finance">Finance</option>
+                <select name="category" id="category" class="form-control" v-model="newentry.category">
+                    <option v-for="category in categories" :value="category">{{category}}</option>
                 </select>
             </div>
             <button class="btn btn-success mr-2" @click="createNew">Create</button>
@@ -41,10 +39,16 @@ export default {
     methods: {
         createNew(){
             console.log("Newentry:", JSON.stringify(this.newentry));//create new entry
+            this.$store.dispatch("setDaily", this.newentry)
             this.$router.replace("/daily")
         },
         cancelCreate(){
             this.$router.replace("/daily");
+        }
+    },
+    computed: {
+        categories() {
+            return this.$store.getters.getCategories;
         }
     }
 

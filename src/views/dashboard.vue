@@ -48,17 +48,11 @@
 
 <script>
 // @ is an alias to /src
-import daily from "@/views/daily.vue";
+//import daily from "@/views/daily.vue";
 
 export default {
   name: "dashboard",
-  components: {
-    daily : daily
-  },
-  methods: {
-    toSearch: function() {
-      this.$router.replace("search");
-    }
-  }
+  components: {},
+  methods: {}
 };
 </script>

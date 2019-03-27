@@ -1,6 +1,6 @@
 <template>
   <div>    
-    <TopHeader type="daily" @changed="dateChanged"/>
+    <TopHeader type="daily" />
     <div class="lower">
       <div class="total-section pr-3 text-right">
         <h3 class="text-info">Total: <span class="badge badge-secondary">{{total}} </span>
@@ -52,7 +52,8 @@
 <!--<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>-->
 <script>
 //import firebase from 'firebase';
-import header   from '@/components/header'
+import header  from '@/components/header';
+import etmixin from "@/mixins/etmixin";
 /*var config = {
   apiKey: "AIzaSyD9EhjfrwCgT7nO0RtpxB3DnC3cul9s4m8",
   authDomain: "aarambha-abc.firebaseapp.com",
@@ -68,27 +69,25 @@ export default {
   components: {
     TopHeader : header
   },
+  mixins: [etmixin],
   data(){
     return {
       total : 0,
       current: new Date(),
+      currentISO: "",
       selectedRow: 0
     }
   },
   computed: {
     dailyentries(){
-      let dailyentries = this.$store.getters.daily;
+      let dailyentries = this.$store.getters.getDaily;
       dailyentries.forEach(daily => {
-        //this.total = this.total + daily.expense;
+        this.total = this.total + daily.expense;
       });
       return dailyentries;
     }
   },
   methods: {
-    dateChanged(newdate){  
-      this.current = new Date(newdate);
-      this.total   = this.current.getDate();
-    },
     selected(key){
       this.selectedRow = key;
     },

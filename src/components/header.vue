@@ -17,25 +17,27 @@
 </template>
 
 <script>
+import etmixin from "@/mixins/etmixin";
 
 export default {
     name: "Header",
-    props:["type"] ,
+    props: ["type"],
+    mixins: [etmixin],
     data(){
         return{
-            current: new Date(),
-            days : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            months : ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+           // current: new Date(),
+            //days : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            //months : ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         }
     },
     computed:{
         header:function(){
-            let d = new Date(this.current);
+            let d =  new Date(this.$store.getters.getCurrentDate);
             if(this.type == "daily"){
-                return d.getDate() + " " + this.months[d.getMonth()] + " " + d.getFullYear() + ", " + this.days[d.getDay()];
+                return d.getDate() + " " + this.getMonthName(d.getMonth()) + " " + d.getFullYear() + ", " + this.getDayName(d.getDay());
             }
             else if(this.type == "monthly"){
-                return this.months[d.getMonth()] + " " + d.getFullYear();
+                return this.getMonthName(d.getMonth()) + " " + d.getFullYear();
             }
             else if(this.type == "yearly"){
                 return d.getFullYear();
@@ -48,22 +50,26 @@ export default {
     },
     methods: {
         fetchNew(what){
-            let offset  = (what == 'next') ? 1 : -1;      
-            let olddate = new Date(this.current);
+            let offset  = (what == 'next') ? 1 : -1;  // Prev or next??    
+            let currentdate = new Date(this.$store.getters.getCurrentDate);
+            
             switch(this.type){
                 case "daily":
-                    this.current = olddate.setDate(olddate.getDate() + offset);
+                    currentdate.setDate(currentdate.getDate() + offset); 
+                    this.$store.dispatch("setCurrentDay", [currentdate.getFullYear(), currentdate.getMonth(), currentdate.getDate()])
                     break;
                 case "monthly":
-                    this.current = olddate.setMonth(olddate.getMonth() + offset);
+                    currentdate.setMonth(currentdate.getMonth() + offset);
+                    this.$store.dispatch("setCurrentMonth", [currentdate.getFullYear(), currentdate.getMonth()])
                     break;
                 case "yearly":
-                    this.current = olddate.setFullYear(olddate.getFullYear() + offset)
+                    currentdate.setFullYear(currentdate.getFullYear() + offset)
+                    this.$store.dispatch("setCurrentYear", currentdate.getFullYear())
                     break;
                 default:
                     console.log("%cUnknown type!!","background:red;color:white")
             }
-            this.$emit('changed', this.current);
+            //this.$emit('changed', this.current);
         }
     }
 }
