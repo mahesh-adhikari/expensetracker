@@ -34,10 +34,10 @@ export default {
         header:function(){
             let d =  new Date(this.$store.getters.getCurrentDate);
             if(this.type == "daily"){
-                return d.getDate() + " " + this.getMonthName(d.getMonth()) + " " + d.getFullYear() + ", " + this.getDayName(d.getDay());
+                return this.dateDetails(d);
             }
             else if(this.type == "monthly"){
-                return this.getMonthName(d.getMonth()) + " " + d.getFullYear();
+                return this.monthName(d.getMonth()) + " " + d.getFullYear();
             }
             else if(this.type == "yearly"){
                 return d.getFullYear();

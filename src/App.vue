@@ -1,6 +1,6 @@
 <template>
   <div id="myapp">
-    <div id="nav" v-if="authenticated">
+    <div id="nav" v-if="$session.exists()||authenticated">
       <navbar @logmeout="logout()"></navbar>
     </div>
     <div class="container-fluid">
@@ -21,15 +21,14 @@ export default {
   data() {
     return {
       authenticated: false,
-      preurl: "https://wsa.pfconcept.com/test/v01/rest/PFRestService/",
       mockAccount: {
-        username: "1028521",
-        password: "pftest123"
+        username: "Mahesh",
+        password: "letmein"
       }
     };
   },
   mounted() {
-    this.authenticated = this.$session.exists();
+    //this.authenticated = this.$session.exists();
   },
   beforeCreate() {
     console.log(

@@ -15,7 +15,7 @@
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">   
-        <b-nav-text><span class="fa fa-user"></span> Mahesh</b-nav-text>
+        <b-nav-text><span class="fa fa-user"></span> {{displayName}}</b-nav-text>
         <b-nav-item @click="logmeout"><span class="fa fa-sign-out-alt"></span> Logout</b-nav-item>
        <!-- <b-nav-item-dropdown text="Lang" right>
           <b-dropdown-item href="#">EN</b-dropdown-item>
@@ -40,6 +40,11 @@ export default {
     logmeout() {
       console.log("emitting logmeout event from navbar");
       this.$emit("logmeout");
+    }
+  },
+  computed: {
+    displayName() {
+      return this.$store.getters.getDisplayName;
     }
   }
 };
