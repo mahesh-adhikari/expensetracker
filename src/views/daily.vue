@@ -19,7 +19,7 @@
             <th></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody> 
           <tr v-for="daily in dailyentries" :key="daily.id">
             <td><input type="text" class="bg-transparent border-0" readonly="readonly" v-model="daily.title"></td>
             <td>{{daily.expense}}</td>
