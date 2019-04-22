@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import firestore from "./js/firebase";
 
 Vue.use(Vuex);
+Vue.use(firestore);
 
 export default new Vuex.Store({
   state: {
@@ -233,7 +235,10 @@ export default new Vuex.Store({
       context.commit("SETCURRENTYEAR", payload);
     },
     setDaily(context, payload) {
-      context.commit("SETDAILY", payload);
+      context.commit("SETDAILY", payload); //console.log(context.$session.authUserData.user.uid);
+      firestore.db.collection('testing').add(payload).then( function(resp){
+        alert(JSON.stringify(resp,3,3));
+      });
     },
     deleteDaily(context, payload) {
       context.commit("DELETEDAILY", payload);

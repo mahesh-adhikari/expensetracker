@@ -1,5 +1,5 @@
 <template>
-    <b-navbar toggleable="md" type="dark" variant="secondary">
+    <b-navbar toggleable="md" type="dark" variant="dark">
     <b-navbar-brand to="/dashboard">EXPENSE TRACKER</b-navbar-brand>
 
     <b-navbar-toggle target="nav_collapse" />
@@ -7,6 +7,7 @@
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
        <!-- <b-nav-item to="/" exact>DASHBOARD</b-nav-item>-->
+        <b-nav-item to="/dashboard" exact>&nbsp;<span class="fa fa-home"></span>&nbsp;</b-nav-item>
         <b-nav-item to="/daily" exact>DAILY</b-nav-item>
         <b-nav-item to="/monthly" exact>MONTHLY</b-nav-item>
         <b-nav-item to="/yearly" exact>YEARLY</b-nav-item>
@@ -44,7 +45,8 @@ export default {
   },
   computed: {
     displayName() {
-      return this.$store.getters.getDisplayName;
+      //return this.$store.getters.getDisplayName;
+      return this.$session.get('authUserData').user.displayName;
     }
   }
 };

@@ -4,29 +4,31 @@
 			<div class="col-lgg-4 col-xl-4 col-sm-3 col-xs-2"></div>
 			<div class="col-lgg-4 col-xl-4 col-sm-6 col-xs-8">
 				<div class="jumbotron" style="margin-top:70px;border:1px solid #4682b4;">	
-					<h2 class="text-secondary text-center font-weight-bold mb-3">
-						EXPENSE TRACKER
-					</h2>
-					<span v-show="loginerror" class="text-danger" style="float:right">
-						<b>Login Error!! </b>
-					</span>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <div class="input-group-text">
-                <span class="fas fa-user"></span>
-              </div>
-            </div>            
-            <input type="text" class="form-control" v-model="input.username" id="username" placeholder="Username" autofocus>
-          </div>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
+          <form v-on:submit.prevent="login">
+            <h2 class="text-secondary text-center font-weight-bold mb-3">
+              EXPENSE TRACKER
+            </h2>
+            <span v-show="loginerror" class="text-danger" style="float:right">
+              <b>Login Error!! </b>
+            </span>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>            
+              <input type="text" class="form-control" v-model="input.username" id="username" placeholder="Username" autofocus required>
             </div>
-            <input type="password" class="form-control" v-model="input.password" id="password" placeholder="Password" required>
-          </div>
-					<button class="form-control btn btn-primary font-bold" v-on:click="login()">Login</button>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+              <input type="password" class="form-control" v-model="input.password" id="password" placeholder="Password" required>
+            </div>
+            <button class="form-control btn btn-primary font-bold" v-on:click="login()">Login</button>
+          </form>
           <hr>
           <button class="form-control btn btn-danger font-bold" v-on:click="googleLogin()">Login with Google 
             <span class="fa fa-plane-paper"></span>
@@ -41,7 +43,7 @@
 </template>
 
 <script>
-import Vue from "vue";
+//import Vue from "vue";
 import firebase from "firebase";
 
 export default {
@@ -69,6 +71,7 @@ export default {
           this.input.password == this.$parent.mockAccount.password
         ) {
           this.$session.start();
+          this.$session.set('authUserData', { user: { displayName: this.input.username}})
           this.$store.dispatch("setAuthUserData", {
             user: {
               displayName: this.input.username
@@ -87,7 +90,7 @@ export default {
       }
     },
     googleLogin(){
-      console.log("Working on Google login feature")
+      //console.log("Working on Google login feature")
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider).then(result => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -95,9 +98,10 @@ export default {
         // The signed-in user info.
         var user = result.user;
         // ...
-        this.$store.dispatch("setAuthUserData", result);
+        //this.$store.dispatch("setAuthUserData", result);
         console.log("Google login success:\n",JSON.stringify(result,3,3))
         this.$session.start();
+        this.$session.set("authUserData", result);
         this.$parent.authenticated = true;
         this.$router.push("/dashboard");
         this.loginerror = false;
@@ -109,8 +113,8 @@ export default {
         var email = error.email;
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
-        // ...
-        console.log("GoogleLogin Error:\n", JSON.stringify(error,3,3))
+        //console.log("GoogleLogin Error:\n", JSON.stringify(error,3,3))
+        alert(errorMessage);
       });
     }
   }
