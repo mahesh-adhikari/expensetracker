@@ -50,6 +50,34 @@
           </div>
         </div>
       </div>
+<<<<<<< HEAD
+=======
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Expense</th>
+            <th>Category</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody> 
+          <tr v-for="daily in dailyentries" :key="daily.id">
+            <td><input type="text" class="bg-transparent border-0" readonly="readonly" v-model="daily.title"></td>
+            <td>{{daily.expense}}</td>
+            <td>{{daily.category}}</td>
+            <td>
+              <button class="btn btn-outline-primary mr-2">
+                <i class="fas fa-edit"></i>
+              </button>
+              <b-button variant="outline-danger" v-b-modal="'questionModal'" @click="selected(daily.id)">
+                <i class="fas fa-trash"></i>
+              </b-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+>>>>>>> 4775559b5efa5a79f78f349d207bf9342bf5a68d
       <!-- Modal Component -->
       <b-modal
         id="updateModal"

@@ -13,6 +13,15 @@ Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 //Vue.use(VueResource);
 //Vue.use(axios);
+<<<<<<< HEAD
+=======
+Vue.use(VueSession, false);
+
+// Initialize Firebase
+var config = {
+};
+firebase.initializeApp(config);
+>>>>>>> 4775559b5efa5a79f78f349d207bf9342bf5a68d
 
 new Vue({
   router,
