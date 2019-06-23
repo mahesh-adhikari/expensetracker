@@ -1,4 +1,4 @@
-# pfcrestvue
+# Expense Tracker
 
 ## Project setup
 ```
