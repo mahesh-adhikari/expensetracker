@@ -34,9 +34,7 @@ export default {
     console.log(
       "App.beforecreate",
       "session:",
-      this.$session.exists(),
-      "authenitcated:",
-      this.authenticated
+      this.$session.exists()
     );
     this.authenticated = this.$session.exists();
     if (!this.authenticated) {

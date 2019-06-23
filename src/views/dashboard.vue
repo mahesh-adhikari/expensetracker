@@ -78,6 +78,9 @@ export default {
   data(){
     return {}
   },
+  beforeCreate(){
+    console.log("dashboard_beforeCreate")
+  },
   computed: {
       thisYearOverview(){
           let ov = this.$store.getters.getThisYearOverview; 

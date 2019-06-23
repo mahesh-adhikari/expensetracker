@@ -1,13 +1,20 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import VueSession from "vue-session";
 import firestore from "./js/firebase";
 
 Vue.use(Vuex);
+Vue.use(VueSession, false);
 Vue.use(firestore);
 
 export default new Vuex.Store({
   state: {
-    authUserData: {},
+    authUserData: {
+      user: {
+        uid: "bOY37ft6NdeuqsbLx54td0qfxdf1",
+        displayName: "Mahesh Adhikari"
+      }
+    },
     currentYear: new Date().getFullYear(),
     currentMonth: new Date().getMonth(),
     currentDay: new Date().getDate(),
@@ -25,7 +32,7 @@ export default new Vuex.Store({
       "Others"
     ],
     dailyentries: [
-      {
+     /* {
         id: 'sdf6',
         year: 2019,
         month: 3,
@@ -33,16 +40,7 @@ export default new Vuex.Store({
         title: "Initial data from state april",
         expense: 300,
         category: "Foods"
-      },
-      {
-        id: 'sdf6ds',
-        year: 2019,
-        month: 2,
-        day: new Date().getDate(),
-        title: "Initial data march",
-        expense: 100,
-        category: "Foods"
-      }
+      }*/
     ]
   },
   getters: {
@@ -177,7 +175,8 @@ export default new Vuex.Store({
     getCurrentDay(state) {
       return state.currentDay;
     },
-    getCategories: state => state.categories
+    getCategories: state => state.categories,
+    getDataStatus: state => state.dailyentries.length
   },
   mutations: {
     SET_AUTH_USER_DATA(state, payload) {
@@ -199,9 +198,9 @@ export default new Vuex.Store({
       state.currentYear = payload;
     },
     SETDAILY(state, payload) {
-      payload.year = state.currentYear;
-      payload.month = state.currentMonth;
-      payload.day = state.currentDay;
+      // payload.year = state.currentYear;
+      // payload.month = state.currentMonth;
+      // payload.day = state.currentDay;
       state.dailyentries.push(payload);
     },
     DELETEDAILY(state, payload) {
@@ -234,17 +233,51 @@ export default new Vuex.Store({
     setCurrentYear(context, payload) {
       context.commit("SETCURRENTYEAR", payload);
     },
-    setDaily(context, payload) {
-      context.commit("SETDAILY", payload); //console.log(context.$session.authUserData.user.uid);
-      firestore.db.collection('testing').add(payload).then( function(resp){
-        alert(JSON.stringify(resp,3,3));
+    setDaily({commit, state}, payload) {
+      payload.year = state.currentYear;
+      payload.month = state.currentMonth;
+      payload.day = state.currentDay;
+      //commit("SETDAILY", payload); 
+      //console.log(state.authUserData)
+      firestore.db.collection("bOY37ft6NdeuqsbLx54td0qfxdf1").add(payload).then( function(docRef){
+        payload.id = docRef.id;
+        commit("SETDAILY", payload); 
+        //console.log(resp)
+      })
+      .catch(function(error){
+        console.error("Error adding document: ", error);
       });
     },
     deleteDaily(context, payload) {
-      context.commit("DELETEDAILY", payload);
+      firestore.db.collection("bOY37ft6NdeuqsbLx54td0qfxdf1").doc(payload.id).delete().then(function() {
+        console.log("Document successfully deleted!");
+        context.commit("DELETEDAILY", payload.id);
+      }).catch(function(error) {
+          console.error("Error removing document: ", error);
+      });
+      
     },
     updateDaily(context, payload) {
+      firestore.db.collection("bOY37ft6NdeuqsbLx54td0qfxdf1").doc(payload.id).update({
+        day: payload.day,
+        month: payload.month,
+        year: payload.year,
+        title: payload.title,
+        category: payload.category,
+        expense: payload.expense
+      })
       context.commit("UPDATE_DAILY", payload);
+    },
+    fetchFirestoreData(context, uid) {
+      console.log("fetching data from firestore..", "collection:", uid)
+      firestore.db.collection(uid).get().then((snapshot) => {
+        snapshot.docs.forEach(doc => {
+          console.log(doc.data(), doc.id);
+          const dailydata = doc.data();
+          dailydata.id = doc.id;
+          context.commit("SETDAILY", dailydata)
+        })
+      })
     }
   }
 });

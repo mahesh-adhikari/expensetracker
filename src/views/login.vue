@@ -78,8 +78,9 @@ export default {
             }
            });
           this.$parent.authenticated = true;
+          this.$store.dispatch("fetchFirestoreData", "bOY37ft6NdeuqsbLx54td0qfxdf1")
           this.$router.push("/dashboard");
-          this.loginerror = false;
+          this.loginerror = false;          
         } else {
           console.log("The username and/or password is incorrect");
           this.loginerror = true;
@@ -103,6 +104,7 @@ export default {
         this.$session.start();
         this.$session.set("authUserData", result);
         this.$parent.authenticated = true;
+        this.$store.dispatch("fetchFirestoreData", this.$session.get('authUserData').user.uid)
         this.$router.push("/dashboard");
         this.loginerror = false;
       }).catch(error => {
