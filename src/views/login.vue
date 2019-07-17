@@ -1,43 +1,43 @@
 <template>
     <div class="container-fluid">
 		<div class="row">
-			<div class="col-lgg-4 col-xl-4 col-sm-3 col-xs-2"></div>
-			<div class="col-lgg-4 col-xl-4 col-sm-6 col-xs-8">
-				<div class="jumbotron" style="margin-top:70px;border:1px solid #4682b4;">	
-          <form v-on:submit.prevent="login">
-            <h2 class="text-secondary text-center font-weight-bold mb-3">
-              EXPENSE TRACKER
-            </h2>
-            <span v-show="loginerror" class="text-danger" style="float:right">
-              <b>Login Error!! </b>
-            </span>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span class="fas fa-user"></span>
-                </div>
-              </div>            
-              <input type="text" class="form-control" v-model="input.username" id="username" placeholder="Username" autofocus required>
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span class="fas fa-lock"></span>
-                </div>
-              </div>
-              <input type="password" class="form-control" v-model="input.password" id="password" placeholder="Password" required>
-            </div>
-            <button class="form-control btn btn-primary font-bold" v-on:click="login()">Login</button>
-          </form>
-          <hr>
-          <button class="form-control btn btn-danger font-bold" v-on:click="googleLogin()">Login with Google 
-            <span class="fa fa-plane-paper"></span>
-          </button>
-          <hr>
-          <p class="text-warning">Don't have an account? <router-link to="/signup" class="font-italic font-weight-bold">Sign Up </router-link></p>
+			<div class="col-lg-4 col-sm-3 col-xs-2"></div>
+			<div class="col-lg-4 col-sm-6 col-xs-8">
+				<div class="jumbotron" style="margin-top:70px;border:1px solid #4682b4;max-width:550px;min-width:370px;">	
+				  <form v-on:submit.prevent="login">
+					<h2 class="text-secondary text-center font-weight-bold mb-3">
+					  EXPENSE TRACKER
+					</h2>
+					<span v-show="loginerror" class="text-danger" style="float:right">
+					  <b>Login Error!! </b>
+					</span>
+					<div class="input-group mb-3">
+					  <div class="input-group-prepend">
+						<div class="input-group-text">
+						  <span class="fas fa-user"></span>
+						</div>
+					  </div>            
+					  <input type="text" class="form-control" v-model="input.username" id="username" placeholder="Username" autofocus required>
+					</div>
+					<div class="input-group mb-3">
+					  <div class="input-group-prepend">
+						<div class="input-group-text">
+						  <span class="fas fa-lock"></span>
+						</div>
+					  </div>
+					  <input type="password" class="form-control" v-model="input.password" id="password" placeholder="Password" required>
+					</div>
+					<button class="form-control btn btn-primary font-bold" v-on:click="login()">Login</button>
+				  </form>
+				  <hr>
+				  <button class="form-control btn btn-danger font-bold" v-on:click="googleLogin()">Login with Google 
+					<span class="fa fa-plane-paper"></span>
+				  </button>
+				  <hr>
+				  <p class="text-warning">Don't have an account? <router-link to="/signup" class="font-italic font-weight-bold">Sign Up </router-link></p>
 				</div>
 			</div>
-			<div class="col-lgg-4 col-xl-4 col-sm-3 col-xs-2"></div>
+			<div class="col-lg-4 col-sm-3 col-xs-2"></div>
 		</div>
 	</div>
 </template>
