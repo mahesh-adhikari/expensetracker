@@ -70,25 +70,25 @@
 <script>
 // @ is an alias to /src
 //import daily from "@/views/daily.vue";
-import etmixin from '@/mixins/etmixin'
+import etmixin from "@/mixins/etmixin";
 
 export default {
   name: "dashboard",
   mixins: [etmixin],
-  data(){
-    return {}
+  data() {
+    return {};
   },
-  beforeCreate(){
-    console.log("dashboard_beforeCreate")
+  beforeCreate() {
+    console.log("dashboard_beforeCreate");
   },
   computed: {
-      thisYearOverview(){
-          let ov = this.$store.getters.getThisYearOverview; 
-          return ov;
-      },
-      todayFormatted(){
-        return this.dateDetails(new Date())
-      }
+    thisYearOverview() {
+      let ov = this.$store.getters.getThisYearOverview;
+      return ov;
+    },
+    todayFormatted() {
+      return this.dateDetails(new Date());
+    }
   }
 };
 </script>

@@ -46,16 +46,15 @@ export default {
   computed: {
     displayName() {
       //return this.$store.getters.getDisplayName;
-      return this.$session.get('authUserData').user.displayName;
+      return this.$session.get("authUserData").user.displayName;
     }
   }
 };
 </script>
 
 <style>
-  .nav-link.active{
-    background: lightseagreen;
-    border-radius: 6px;
-  }
+.nav-link.active {
+  background: lightseagreen;
+  border-radius: 6px;
+}
 </style>
-

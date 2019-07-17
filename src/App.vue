@@ -31,11 +31,7 @@ export default {
     //this.authenticated = this.$session.exists();
   },
   beforeCreate() {
-    console.log(
-      "App.beforecreate",
-      "session:",
-      this.$session.exists()
-    );
+    console.log("App.beforecreate", "session:", this.$session.exists());
     this.authenticated = this.$session.exists();
     if (!this.authenticated) {
       console.log("App.Not authenticated::beforeCreate");
@@ -59,5 +55,5 @@ export default {
 </script>
 
 <style>
-  @import './assets/css/fa-all.css';
+@import "./assets/css/fa-all.css";
 </style>

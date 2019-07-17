@@ -39,45 +39,47 @@
 <script>
 import firebase from "firebase";
 export default {
-    name: "SignUp",
-    data() {
-        return {
-            email:"",
-            password: "",
-            message: "",
-            showMessage: false,
-            hasError: false,
-            isSuccess: false
-        }
-    },
-    methods: {
-        signUp: function(){
-            firebase.auth().createUserWithEmailAndPassword(this.email,this.password).then(
-                (user) => {
-                    //this.message = "Your account has been created, you can login now from login section!";
-                    //this.showMessage = true;
-                    //alert(user.user.email);
-                    console.log(JSON.stringify(user,0,3));
-                    this.showMessage = true;
-                    this.hasError = false;
-                    this.isSuccess = true;
-                    this.message = user.user.refreshToken;
-                },
-                (err) => {
-                    //this.message = "Oops. " + err.message;
-                    //this.showMessage = true;
-                   // alert(err.message);
-                    this.showMessage = true;
-                    this.hasError = true;
-                    this.isSuccess = false;
-                    this.message = "Error: " + err.message;
-                }
-            )
-        }
+  name: "SignUp",
+  data() {
+    return {
+      email: "",
+      password: "",
+      message: "",
+      showMessage: false,
+      hasError: false,
+      isSuccess: false
+    };
+  },
+  methods: {
+    signUp: function() {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(
+          user => {
+            //this.message = "Your account has been created, you can login now from login section!";
+            //this.showMessage = true;
+            //alert(user.user.email);
+            console.log(JSON.stringify(user, 0, 3));
+            this.showMessage = true;
+            this.hasError = false;
+            this.isSuccess = true;
+            this.message = user.user.refreshToken;
+          },
+          err => {
+            //this.message = "Oops. " + err.message;
+            //this.showMessage = true;
+            // alert(err.message);
+            this.showMessage = true;
+            this.hasError = true;
+            this.isSuccess = false;
+            this.message = "Error: " + err.message;
+          }
+        );
     }
-}
+  }
+};
 </script>
 
 <style>
-
 </style>

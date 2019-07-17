@@ -32,7 +32,7 @@ export default new Vuex.Store({
       "Others"
     ],
     dailyentries: [
-     /* {
+      /* {
         id: 'sdf6',
         year: 2019,
         month: 3,
@@ -55,17 +55,17 @@ export default new Vuex.Store({
     getDaily(state) {
       return state.dailyentries.filter(
         entry =>
-          (entry.year == state.currentYear &&
+          entry.year == state.currentYear &&
           entry.month == state.currentMonth &&
-          entry.day == state.currentDay)
+          entry.day == state.currentDay
       );
     },
     getMonthly(state) {
-      const monthly = state.dailyentries.filter(
-        entry => {
-          return (entry.year == state.currentYear && entry.month == state.currentMonth);
-        }          
-      );
+      const monthly = state.dailyentries.filter(entry => {
+        return (
+          entry.year == state.currentYear && entry.month == state.currentMonth
+        );
+      });
       var grouped = [];
       monthly.forEach(function(day) {
         var found = false;
@@ -75,7 +75,7 @@ export default new Vuex.Store({
             found = true;
           }
         });
-        if (!found) grouped.push(JSON.parse(JSON.stringify(day)))
+        if (!found) grouped.push(JSON.parse(JSON.stringify(day)));
       });
       return grouped;
       //return monthly;
@@ -88,27 +88,31 @@ export default new Vuex.Store({
       currentYearRecords.forEach(function(rec) {
         let found = false;
         perMonthRecords.forEach(function(pmr) {
-          if(pmr.month == rec.month) {
+          if (pmr.month == rec.month) {
             pmr.expense = pmr.expense + rec.expense;
             found = true;
           }
-        })
+        });
         if (!found)
-          perMonthRecords.push({year: rec.year, month: rec.month, expense: rec.expense})
-      })
+          perMonthRecords.push({
+            year: rec.year,
+            month: rec.month,
+            expense: rec.expense
+          });
+      });
       return perMonthRecords;
     },
     getThisYearOverview(state) {
       //return { type: 'test'};
       var thisday = {
-          day: new Date().getDate(),
-          total: 0,
-          highestCategory: "",
-          highestExpense: 0,
-          leastCategory: "",
-          leastExpense: 0,
-          expenseDetail:{}
-        }      
+        day: new Date().getDate(),
+        total: 0,
+        highestCategory: "",
+        highestExpense: 0,
+        leastCategory: "",
+        leastExpense: 0,
+        expenseDetail: {}
+      };
       var thismonth = {
         month: new Date().getMonth(),
         total: 0,
@@ -116,8 +120,8 @@ export default new Vuex.Store({
         highestExpense: 0,
         leastCategory: "",
         leastExpense: 0,
-        expenseDetail:{}
-      }
+        expenseDetail: {}
+      };
       var thisyear = {
         year: new Date().getFullYear(),
         total: 0,
@@ -125,43 +129,41 @@ export default new Vuex.Store({
         highestExpense: 0,
         leastCategory: "",
         leastExpense: 0,
-        expenseDetail:{}
-      }
-      state.dailyentries.forEach(
-        entry => {
-          //this year
-          if(entry.year === thisyear.year) {
-            thisyear.total = thisyear.total + entry.expense;
-            if(thisyear.expenseDetail.hasOwnProperty(entry.category))
-                thisyear.expenseDetail[entry.category] = thisyear.expenseDetail[entry.category] + entry.expense;
-            else
-              thisyear.expenseDetail[entry.category] = entry.expense;
+        expenseDetail: {}
+      };
+      state.dailyentries.forEach(entry => {
+        //this year
+        if (entry.year === thisyear.year) {
+          thisyear.total = thisyear.total + entry.expense;
+          if (thisyear.expenseDetail.hasOwnProperty(entry.category))
+            thisyear.expenseDetail[entry.category] =
+              thisyear.expenseDetail[entry.category] + entry.expense;
+          else thisyear.expenseDetail[entry.category] = entry.expense;
 
-            //this month
-            if(entry.month === thismonth.month) {
-              thismonth.total = thismonth.total + entry.expense;
-              if(thismonth.expenseDetail.hasOwnProperty(entry.category))
-                thismonth.expenseDetail[entry.category] = thismonth.expenseDetail[entry.category] + entry.expense;
-              else
-                thismonth.expenseDetail[entry.category] = entry.expense;
+          //this month
+          if (entry.month === thismonth.month) {
+            thismonth.total = thismonth.total + entry.expense;
+            if (thismonth.expenseDetail.hasOwnProperty(entry.category))
+              thismonth.expenseDetail[entry.category] =
+                thismonth.expenseDetail[entry.category] + entry.expense;
+            else thismonth.expenseDetail[entry.category] = entry.expense;
 
-              //this day
-              if(entry.day === thisday.day){
-                thisday.total = thisday.total + entry.expense;
-                if(thisday.expenseDetail.hasOwnProperty(entry.category))
-                  thisday.expenseDetail[entry.category] = thisday.expenseDetail[entry.category] + entry.expense;
-                else
-                  thisday.expenseDetail[entry.category] = entry.expense;
-              }
-            }          
+            //this day
+            if (entry.day === thisday.day) {
+              thisday.total = thisday.total + entry.expense;
+              if (thisday.expenseDetail.hasOwnProperty(entry.category))
+                thisday.expenseDetail[entry.category] =
+                  thisday.expenseDetail[entry.category] + entry.expense;
+              else thisday.expenseDetail[entry.category] = entry.expense;
+            }
           }
         }
-      );
+      });
       return {
         thisday: thisday,
         thismonth: thismonth,
         thisyear: thisyear
-      }
+      };
     },
     getCurrentDate(state) {
       return new Date(state.currentYear, state.currentMonth, state.currentDay); //.join("-");
@@ -233,51 +235,64 @@ export default new Vuex.Store({
     setCurrentYear(context, payload) {
       context.commit("SETCURRENTYEAR", payload);
     },
-    setDaily({commit, state}, payload) {
+    setDaily({ commit, state }, payload) {
       payload.year = state.currentYear;
       payload.month = state.currentMonth;
       payload.day = state.currentDay;
-      //commit("SETDAILY", payload); 
+      //commit("SETDAILY", payload);
       //console.log(state.authUserData)
-      firestore.db.collection("bOY37ft6NdeuqsbLx54td0qfxdf1").add(payload).then( function(docRef){
-        payload.id = docRef.id;
-        commit("SETDAILY", payload); 
-        //console.log(resp)
-      })
-      .catch(function(error){
-        console.error("Error adding document: ", error);
-      });
+      firestore.db
+        .collection("bOY37ft6NdeuqsbLx54td0qfxdf1")
+        .add(payload)
+        .then(function(docRef) {
+          payload.id = docRef.id;
+          commit("SETDAILY", payload);
+          //console.log(resp)
+        })
+        .catch(function(error) {
+          console.error("Error adding document: ", error);
+        });
     },
     deleteDaily(context, payload) {
-      firestore.db.collection("bOY37ft6NdeuqsbLx54td0qfxdf1").doc(payload.id).delete().then(function() {
-        console.log("Document successfully deleted!");
-        context.commit("DELETEDAILY", payload.id);
-      }).catch(function(error) {
+      firestore.db
+        .collection("bOY37ft6NdeuqsbLx54td0qfxdf1")
+        .doc(payload.id)
+        .delete()
+        .then(function() {
+          console.log("Document successfully deleted!");
+          context.commit("DELETEDAILY", payload.id);
+        })
+        .catch(function(error) {
           console.error("Error removing document: ", error);
-      });
-      
+        });
     },
     updateDaily(context, payload) {
-      firestore.db.collection("bOY37ft6NdeuqsbLx54td0qfxdf1").doc(payload.id).update({
-        day: payload.day,
-        month: payload.month,
-        year: payload.year,
-        title: payload.title,
-        category: payload.category,
-        expense: payload.expense
-      })
+      firestore.db
+        .collection("bOY37ft6NdeuqsbLx54td0qfxdf1")
+        .doc(payload.id)
+        .update({
+          day: payload.day,
+          month: payload.month,
+          year: payload.year,
+          title: payload.title,
+          category: payload.category,
+          expense: payload.expense
+        });
       context.commit("UPDATE_DAILY", payload);
     },
     fetchFirestoreData(context, uid) {
-      console.log("fetching data from firestore..", "collection:", uid)
-      firestore.db.collection(uid).get().then((snapshot) => {
-        snapshot.docs.forEach(doc => {
-          console.log(doc.data(), doc.id);
-          const dailydata = doc.data();
-          dailydata.id = doc.id;
-          context.commit("SETDAILY", dailydata)
-        })
-      })
+      console.log("fetching data from firestore..", "collection:", uid);
+      firestore.db
+        .collection(uid)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            console.log(doc.data(), doc.id);
+            const dailydata = doc.data();
+            dailydata.id = doc.id;
+            context.commit("SETDAILY", dailydata);
+          });
+        });
     }
   }
 });
