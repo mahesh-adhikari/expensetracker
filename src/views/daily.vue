@@ -94,7 +94,7 @@
 <!--<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>-->
 <script>
 //import firebase from 'firebase';
-import header from "@/components/header";
+import header  from '@/components/header';
 import etmixin from "@/mixins/etmixin";
 
 export default {
@@ -103,7 +103,7 @@ export default {
     TopHeader: header
   },
   mixins: [etmixin],
-  data() {
+  data(){
     return {
       total: 0,
       current: new Date(),
@@ -113,14 +113,10 @@ export default {
   },
   beforeCreate() {
     let d = new Date();
-    this.$store.dispatch("setCurrentDay", [
-      d.getFullYear(),
-      d.getMonth(),
-      d.getDate()
-    ]);
+    this.$store.dispatch("setCurrentDay", [d.getFullYear(), d.getMonth(), d.getDate()])
   },
   computed: {
-    dailyentries() {
+    dailyentries(){
       let dailyentries = this.$store.getters.getDaily;
       this.total = 0;
       dailyentries.forEach(daily => {
@@ -133,17 +129,17 @@ export default {
     }
   },
   methods: {
-    selected(row) {
+    selected(row){
       this.selectedRow = JSON.parse(JSON.stringify(row));
       //console.log("Selected:", JSON.stringify(this.selectedRow,3,3))
     },
-    deleteOk() {
+    deleteOk(){
       //console.log(this.selectedRow.id + " will be deleted")
-      this.$store.dispatch("deleteDaily", this.selectedRow.id);
+      this.$store.dispatch("deleteDaily", this.selectedRow.id )
     },
-    updateOk() {
+    updateOk(){
       //console.log("Updating to..\n", JSON.stringify(this.selectedRow,3,3));
-      this.$store.dispatch("updateDaily", this.selectedRow);
+      this.$store.dispatch("updateDaily", this.selectedRow)
     }
   }
 };

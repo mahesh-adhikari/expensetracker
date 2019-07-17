@@ -37,40 +37,42 @@
 import etmixin from "@/mixins/etmixin";
 
 export default {
-  name: "NewDailyEntry",
-  mixins: [etmixin],
-  data() {
-    return {
-      newentry: {
-        id: "",
-        title: "",
-        expense: 0,
-        category: ""
-      }
-    };
-  },
-  methods: {
-    createNew() {
-      this.newentry.id = this.uuidv4();
-      console.log("Newentry:", JSON.stringify(this.newentry)); //create new entry
-      this.$store.dispatch("setDaily", this.newentry);
-      this.$router.replace("/daily");
+    name: "NewDailyEntry",
+    mixins: [etmixin],
+    data(){
+        return {
+            newentry: {
+                id: "",
+                title: "",
+                expense: 0,
+                category: ""
+            }
+        }
     },
-    cancelCreate() {
-      this.$router.replace("/daily");
-    }
-  },
-  computed: {
-    categories() {
-      return this.$store.getters.getCategories;
+    methods: {
+        createNew(){
+            this.newentry.id = this.uuidv4();
+            console.log("Newentry:", JSON.stringify(this.newentry));//create new entry
+            this.$store.dispatch("setDaily", this.newentry)
+            this.$router.replace("/daily")
+        },
+        cancelCreate(){
+            this.$router.replace("/daily");
+        }
     },
-    dateDetail() {
-      let d = new Date(this.$store.getters.getCurrentDate);
-      return this.dateDetails(d);
+    computed: {
+        categories() {
+            return this.$store.getters.getCategories;
+        },
+        dateDetail(){
+            let d =  new Date(this.$store.getters.getCurrentDate);
+            return this.dateDetails(d);
+        }
     }
-  }
-};
+
+}
 </script>
 
 <style>
+
 </style>
