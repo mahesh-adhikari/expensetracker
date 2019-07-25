@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-2">          
             </div>
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title text-info text-right">Total Expense: 

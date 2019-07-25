@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard">
     <div class="card bg-light text-dark">
-      <div class="card-footer">
-        <h5 class="text-primary float-right">{{todayFormatted}}</h5>
+      <div class="card-footer bg-success">
+        <p><span class="font-x-large font-weight-light badge-pill badge-danger border border-dark float-right">{{todayFormatted}}</span></p>
       </div>
     </div>
     <div class="card-deck mt-3">

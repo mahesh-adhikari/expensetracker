@@ -1,17 +1,17 @@
 <template>
    <div class="row p-3 bg-success mt-2">
-       <div class="col-2">
-           <button class="btn btn-block border-secondary btn-outline-dark float-right" @click="fetchNew('prev')">
-               <i class="fas fa-arrow-left font-x-large"></i>
-           </button>
+       <div class="col-2">           
        </div>
        <div class="col-8 text-center">
-            <span class="lead text-monospace font-weight-bold">{{header}}</span>
-       </div>
-       <div class="col-2">
-           <button class="btn btn-block border-secondary btn-outline-dark float-left" @click="fetchNew('next')">
+           <button class="btn btn-outline-light float-left" @click="fetchNew('prev')">
+               <i class="fas fa-arrow-left font-x-large"></i>
+           </button>
+            <span class="badge badge-pill badge-secondary text-monospace font-x-large">{{header}}</span>
+            <button class="btn btn-outline-light float-right" @click="fetchNew('next')">
                <i class="fas fa-arrow-right font-x-large"></i>
            </button>
+       </div>
+       <div class="col-2">           
        </div>       
    </div> 
 </template>
