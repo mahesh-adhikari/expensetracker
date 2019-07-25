@@ -6,7 +6,7 @@
         <div class="col-md-2">          
         </div>
         <div class="col-md-8">
-          <div class="card">
+          <div class="card text-white bg-darkslategray">
             <div class="card-header">
                 <div class="float-left w-50">
                   <button class="btn btn-primary ml-2" @click="$router.replace('/newdaily')">

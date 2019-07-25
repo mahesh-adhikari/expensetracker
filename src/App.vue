@@ -59,5 +59,6 @@ export default {
 </script>
 
 <style>
+ .bg-darkslategray{background: darkslategray !important}
   @import './assets/css/fa-all.css';
 </style>

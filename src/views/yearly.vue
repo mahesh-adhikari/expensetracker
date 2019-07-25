@@ -6,7 +6,7 @@
             <div class="col-md-2">          
             </div>
             <div class="col-md-8">
-                <div class="card">
+                <div class="card text-white bg-darkslategray">
                     <div class="card-header">
                         <h3 class="card-title text-info text-right">Total Expense: 
                             <span class="badge badge-secondary">{{total}}</span>
