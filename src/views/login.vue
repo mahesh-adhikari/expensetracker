@@ -67,8 +67,8 @@ export default {
     login() {
       if (this.input.username != "" && this.input.password != "") {
         if (
-          this.input.username == this.$parent.mockAccount.username &&
-          this.input.password == this.$parent.mockAccount.password
+          (this.input.username == this.$parent.mockAccount.username &&
+          this.input.password == this.$parent.mockAccount.password) || this.emailLogin()
         ) {
           this.$session.start();
           this.$session.set('authUserData', { user: { displayName: this.input.username}})
@@ -89,6 +89,19 @@ export default {
         console.log("A username and password must be present");
         this.loginerror = true;
       }
+    },
+    emailLogin(){
+      console.log("email login check")
+      firebase.auth().signInWithEmailAndPassword(this.input.username, this.input.password).then(result => {
+        console.log("Result:", result)
+        return true;
+      }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorCode, ":", errorMessage)
+        return true;
+      });
     },
     googleLogin(){
       //console.log("Working on Google login feature")
