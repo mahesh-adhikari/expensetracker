@@ -1,5 +1,5 @@
 <template>
-   <div class="row p-3 bg-success mt-2">
+   <div class="row p-3 mt-2">
        <div class="col-2">           
        </div>
        <div class="col-8 text-center">
