@@ -27,7 +27,7 @@
 					  </div>
 					  <input type="password" class="form-control" v-model="input.password" id="password" placeholder="Password" required>
 					</div>
-					<button class="form-control btn btn-primary font-bold" v-on:click="login()">Login</button>
+					<button class="form-control btn btn-primary font-bold" v-on:click.prevent="login()">Login</button>
 				  </form>
 				  <hr>
 				  <button class="form-control btn btn-danger font-bold" v-on:click="googleLogin()">Login with Google 
@@ -67,70 +67,92 @@ export default {
     login() {
       if (this.input.username != "" && this.input.password != "") {
         if (
-          (this.input.username == this.$parent.mockAccount.username &&
-          this.input.password == this.$parent.mockAccount.password) || this.emailLogin()
+          this.input.username == this.$parent.mockAccount.username &&
+          this.input.password == this.$parent.mockAccount.password
         ) {
           this.$session.start();
-          this.$session.set('authUserData', { user: { displayName: this.input.username}})
+          this.$session.set("authUserData", {
+            user: { displayName: this.input.username }
+          });
           this.$store.dispatch("setAuthUserData", {
             user: {
               displayName: this.input.username
             }
-           });
+          });
           this.$parent.authenticated = true;
-          this.$store.dispatch("fetchFirestoreData", "bOY37ft6NdeuqsbLx54td0qfxdf1")
+          this.$store.dispatch(
+            "fetchFirestoreData",
+            "bOY37ft6NdeuqsbLx54td0qfxdf1"
+          );
           this.$router.push("/dashboard");
-          this.loginerror = false;          
+          this.loginerror = false;
         } else {
-          console.log("The username and/or password is incorrect");
-          this.loginerror = true;
+          //console.log("The username and/or password is incorrect");
+          //this.loginerror = true;
+          this.emailLogin(this.input.username, this.input.password);
         }
       } else {
         console.log("A username and password must be present");
         this.loginerror = true;
       }
     },
-    emailLogin(){
-      console.log("email login check")
-      firebase.auth().signInWithEmailAndPassword(this.input.username, this.input.password).then(result => {
-        console.log("Result:", result)
-        return true;
-      }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        alert(errorCode, ":", errorMessage)
-        return true;
-      });
+    emailLogin(email, password) {
+      console.log("email login check");
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(result => {
+          console.log("EmailAuth:\n", result)
+          var authUserData = JSON.parse(JSON.stringify(result));
+          authUserData.user.displayName = email;
+          this.$session.start();                           
+          this.$session.set("authUserData", authUserData);     
+          this.$parent.authenticated = true;
+          this.$store.dispatch(
+            "fetchFirestoreData",
+            this.$session.get("authUserData") //.user.uid
+          );
+          this.$router.push("/dashboard");          
+        })
+        .catch(error => {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          alert(errorCode, ":", errorMessage);
+          this.loginerror = true;
+        });
     },
-    googleLogin(){
+    googleLogin() {
       //console.log("Working on Google login feature")
       var provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider).then(result => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        // ...
-        //this.$store.dispatch("setAuthUserData", result);
-        console.log("Google login success:\n",JSON.stringify(result,3,3))
-        this.$session.start();
-        this.$session.set("authUserData", result);
-        this.$parent.authenticated = true;
-        this.$store.dispatch("fetchFirestoreData", this.$session.get('authUserData').user.uid)
-        this.$router.push("/dashboard");
-        this.loginerror = false;
-      }).catch(error => {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        //console.log("GoogleLogin Error:\n", JSON.stringify(error,3,3))
-        alert(errorMessage);
-      });
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(result => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          // ...
+          //this.$store.dispatch("setAuthUserData", result);
+          console.log("Google login success:\n", JSON.stringify(result, 3, 3));
+          this.$session.start();
+          this.$session.set("authUserData", result);
+          this.$parent.authenticated = true;
+          this.$store.dispatch(
+            "fetchFirestoreData",
+            this.$session.get("authUserData") //.user.uid
+          );
+          this.$router.push("/dashboard");
+          this.loginerror = false;
+        })
+        .catch(error => {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          this.loginerror = true;
+          alert("Error!\n" + errorMessage);
+        });
     }
   }
 };

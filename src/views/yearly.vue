@@ -8,9 +8,9 @@
             <div class="col-md-8">
                 <div class="card text-white bg-darkslategray">
                     <div class="card-header">
-                        <h3 class="card-title text-info text-right">Total Expense: 
-                            <span class="badge badge-secondary">{{total}}</span>
-                        </h3>
+                        <h4 class="card-title text-center"><small>Total: </small> 
+                            <span class="badge badge-success">{{total}}</span>
+                        </h4>
                     </div>
                     <div class="card-body">
                         <table class="table table-sm table-striped">
@@ -36,33 +36,32 @@
 </template>
 
 <script>
-import header  from '@/components/header';
+import header from "@/components/header";
 import etmixin from "@/mixins/etmixin";
 
 export default {
-    name: "Yearly",
-    components:{
-      TopHeader : header
-    },
-    mixins: [etmixin],
-    data(){
-        return {
-            total : 0
-        }
-    },
-    computed: {
-        year(){
-            const yeardata = this.$store.getters.getYearly;
-            console.log(yeardata);
-            this.total = 0;
-            yeardata.forEach(month => {
-                month.name = this.monthName(month.month)
-                this.total = this.total + month.expense
-            })
-            yeardata.sort((a,b) => a.month - b.month)
-            return yeardata;
-        }
+  name: "Yearly",
+  components: {
+    TopHeader: header
+  },
+  mixins: [etmixin],
+  data() {
+    return {
+      total: 0
+    };
+  },
+  computed: {
+    year() {
+      const yeardata = this.$store.getters.getYearly;
+      this.total = 0;
+      yeardata.forEach(month => {
+        month.name = this.monthName(month.month);
+        this.total = this.total + month.expense;
+      });
+      yeardata.sort((a, b) => a.month - b.month);
+      return yeardata;
     }
+  }
 };
 </script>
 

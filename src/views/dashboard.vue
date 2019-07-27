@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <div class="card bg-light text-dark">
-      <div class="card-footer bg-success">
+      <div class="card-footer" style="background:lightsteelblue;">
         <p><span class="font-x-large font-weight-light badge-pill badge-danger border border-dark float-right">{{todayFormatted}}</span></p>
       </div>
     </div>
@@ -70,25 +70,25 @@
 <script>
 // @ is an alias to /src
 //import daily from "@/views/daily.vue";
-import etmixin from '@/mixins/etmixin'
+import etmixin from "@/mixins/etmixin";
 
 export default {
   name: "dashboard",
   mixins: [etmixin],
-  data(){
-    return {}
+  data() {
+    return {};
   },
-  beforeCreate(){
-    console.log("dashboard_beforeCreate")
+  beforeCreate() {
+    console.log("dashboard_beforeCreate");
   },
   computed: {
-      thisYearOverview(){
-          let ov = this.$store.getters.getThisYearOverview; 
-          return ov;
-      },
-      todayFormatted(){
-        return this.dateDetails(new Date())
-      }
+    thisYearOverview() {
+      let ov = this.$store.getters.getThisYearOverview;
+      return ov;
+    },
+    todayFormatted() {
+      return this.dateDetails(new Date());
+    }
   }
 };
 </script>

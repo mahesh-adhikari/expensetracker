@@ -15,8 +15,8 @@
                   </button>
                 </div>
                 <div class="float-left w-50">
-                  <h4 class="text-info text-right">
-                    <small>Total: </small> <span class="badge badge-secondary">{{total}} </span>
+                  <h4 class="text-white">
+                    <small>Total: </small> <span class="badge badge-success">{{total}} </span>
                   </h4>
                 </div>
             </div>
@@ -64,8 +64,8 @@
             <input type="text" id="title" class="form-control" v-model="selectedRow.title">
           </div>
           <div class="form-group">
-            <label for="expense">TItle:</label>
-            <input type="text" id="expense" class="form-control" v-model.number="selectedRow.expense">
+            <label for="expense">Expense:</label>
+            <input type="number" id="expense" class="form-control" v-model.number="selectedRow.expense">
           </div>
           <div class="form-group">
             <label for="category">Category</label>
@@ -94,7 +94,7 @@
 <!--<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>-->
 <script>
 //import firebase from 'firebase';
-import header  from '@/components/header';
+import header from "@/components/header";
 import etmixin from "@/mixins/etmixin";
 
 export default {
@@ -103,7 +103,7 @@ export default {
     TopHeader: header
   },
   mixins: [etmixin],
-  data(){
+  data() {
     return {
       total: 0,
       current: new Date(),
@@ -113,10 +113,14 @@ export default {
   },
   beforeCreate() {
     let d = new Date();
-    this.$store.dispatch("setCurrentDay", [d.getFullYear(), d.getMonth(), d.getDate()])
+    this.$store.dispatch("setCurrentDay", [
+      d.getFullYear(),
+      d.getMonth(),
+      d.getDate()
+    ]);
   },
   computed: {
-    dailyentries(){
+    dailyentries() {
       let dailyentries = this.$store.getters.getDaily;
       this.total = 0;
       dailyentries.forEach(daily => {
@@ -129,17 +133,17 @@ export default {
     }
   },
   methods: {
-    selected(row){
+    selected(row) {
       this.selectedRow = JSON.parse(JSON.stringify(row));
       //console.log("Selected:", JSON.stringify(this.selectedRow,3,3))
     },
-    deleteOk(){
-      //console.log(this.selectedRow.id + " will be deleted")
-      this.$store.dispatch("deleteDaily", this.selectedRow.id )
+    deleteOk() {
+      console.log(this.selectedRow.id + " will be deleted")
+      this.$store.dispatch("deleteDaily", this.selectedRow.id);
     },
-    updateOk(){
+    updateOk() {
       //console.log("Updating to..\n", JSON.stringify(this.selectedRow,3,3));
-      this.$store.dispatch("updateDaily", this.selectedRow)
+      this.$store.dispatch("updateDaily", this.selectedRow);
     }
   }
 };

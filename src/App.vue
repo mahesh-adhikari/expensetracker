@@ -10,8 +10,9 @@
 </template>
 
 <script>
-import Vue from "vue";
+//import Vue from "vue";
 import Navbar from "@/components/navbar.vue";
+import { mapState } from 'vuex';
 
 export default {
   name: "app",
@@ -27,38 +28,36 @@ export default {
       }
     };
   },
-  mounted() {
-    //this.authenticated = this.$session.exists();
-  },
-  beforeCreate() {
-    console.log(
-      "App.beforecreate",
-      "session:",
-      this.$session.exists()
-    );
+  created() {
+    //console.log("App.beforecreate", "session:", this.$session.exists());
     this.authenticated = this.$session.exists();
     if (!this.authenticated) {
-      console.log("App.Not authenticated::beforeCreate");
+      
       this.$router.push("/login");
     } else {
-      console.log(this.$session.getAll());
-      //Vue.http.headers.common.Authorization = this.$session.get("authorization")
+      console.log(this.$session.getAll());  
+      if(this.fetched_fb_data == false){
+        this.$store.dispatch(
+              "fetchFirestoreData",
+              this.$session.get("authUserData") //.user.uid
+            );
+      }    
     }
   },
   methods: {
     logout() {
-      //this.authenticated = false;
-      //console.log("session exists:", this.$session.exists());
       this.authenticated = false;
       this.$session.destroy();
       this.$router.push("/login");
     }
   },
-  computed: {}
+  computed: mapState(['fetched_fb_data'])
 };
 </script>
 
 <style>
- .bg-darkslategray{background: darkslategray !important}
-  @import './assets/css/fa-all.css';
+.bg-darkslategray {
+  background: darkslategray !important;
+}
+@import "./assets/css/fa-all.css";
 </style>
