@@ -55,8 +55,14 @@
         id="updateModal"
         ref="modal"
         title="Edit Entry!!"
+        header-bg-variant="secondary"
+        header-text-variant="white"
+        body-bg-variant="secondary"
+        body-text-variant="white"
+        footer-bg-variant="secondary"
         @ok="updateOk"
-        variant="info"
+        ok-variant="success"
+        cancel-variant="danger"
       >
         <div>
           <div class="form-group">
@@ -82,7 +88,13 @@
         ref="modal"
         title="Delete Entry!!"
         @ok="deleteOk"
-        variant="danger"
+        header-bg-variant="secondary"
+        header-text-variant="white"
+        body-bg-variant="secondary"
+        body-text-variant="white"
+        footer-bg-variant="secondary"
+        ok-variant="success"
+        cancel-variant="danger"
       >
         Are you sure you want to delete this record?
       </b-modal>
