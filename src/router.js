@@ -19,6 +19,11 @@ export default new Router({
       component: () => import("./views/signup.vue")
     },
     {
+      path: "/",
+      name: "dashboard",
+      component: Dashboard
+    },
+    {
       path: "/dashboard",
       name: "dashboard",
       component: Dashboard
