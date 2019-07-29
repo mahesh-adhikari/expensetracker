@@ -150,7 +150,7 @@ export default {
       //console.log("Selected:", JSON.stringify(this.selectedRow,3,3))
     },
     deleteOk() {
-      console.log(this.selectedRow.id + " will be deleted")
+      //console.log(this.selectedRow.id + " will be deleted")
       this.$store.dispatch("deleteDaily", this.selectedRow.id);
     },
     updateOk() {

@@ -52,7 +52,7 @@ export default {
   methods: {
     createNew() {
       this.newentry.id = this.uuidv4();
-      console.log("Newentry:", JSON.stringify(this.newentry)); //create new entry
+      //console.log("Newentry:", JSON.stringify(this.newentry)); //create new entry
       this.$store.dispatch("setDaily", this.newentry);
       this.$router.replace("/daily");
     },

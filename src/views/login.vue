@@ -73,19 +73,19 @@ export default {
           this.input.username == this.$parent.mockAccount.username &&
           this.input.password == this.$parent.mockAccount.password
         ) {
-          this.$session.start();
-          this.$session.set("authUserData", {
-            user: { displayName: this.input.username }
-          });
-          this.$store.dispatch("setAuthUserData", {
-            user: {
-              displayName: this.input.username
+          var userdata = { 
+              user: {
+                email: "demo@et.com",
+                uid: "XeIApcO56eZtCls49BK6KN8bbZB3",
+                displayName: "Demo User"
+              }
             }
-          });
+          this.$session.start();
+          this.$session.set("authUserData", userdata);
           this.$parent.authenticated = true;
           this.$store.dispatch(
             "fetchFirestoreData",
-            "bOY37ft6NdeuqsbLx54td0qfxdf1"
+            userdata
           );
           this.showloader = false;
           this.$router.push("/dashboard");
@@ -96,18 +96,17 @@ export default {
           this.emailLogin(this.input.username, this.input.password);
         }
       } else {
-        console.log("A username and password must be present");
+        alert("A username and password must be present");
         this.loginerror = true;
         this.showloader = false;
       }
     },
-    emailLogin(email, password) {
-      console.log("email login check");
+    emailLogin(email, password) {      
       firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(result => {
-          console.log("EmailAuth:\n", result)
+          //console.log("EmailAuth:\n", result)
           var authUserData = JSON.parse(JSON.stringify(result));
           authUserData.user.displayName = email;
           this.$session.start();                           

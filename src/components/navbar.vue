@@ -39,7 +39,7 @@
 export default {
   methods: {
     logmeout() {
-      console.log("emitting logmeout event from navbar");
+      //console.log("emitting logmeout event from navbar");
       this.$emit("logmeout");
     }
   },

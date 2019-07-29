@@ -180,6 +180,10 @@ const store = new Vuex.Store({
     SET_AUTH_USER_DATA(state, payload) {
       state.authUserData = payload;
     },
+    CLEAR_STORE(state) {
+      state.fetched_fb_data = false;
+      state.dailyentries = [];
+    },
     SETCURRENTDAY(state, payload) {
       if (state.currentYear !== payload[0]) state.currentYear = payload[0];
 
@@ -218,6 +222,9 @@ const store = new Vuex.Store({
     }
   },
   actions: {
+    clearStore({commit}) {
+      commit("CLEAR_STORE");
+    },
     setAuthUserData(context, payload) {
       context.commit("SET_AUTH_USER_DATA", payload);
     },
@@ -255,7 +262,7 @@ const store = new Vuex.Store({
         .doc(recId)
         .delete()
         .then(function() {
-          console.log("Document successfully deleted!");
+          //console.log("Document successfully deleted!");
           commit("DELETEDAILY", recId);
         })
         .catch(function(error) {
@@ -277,11 +284,11 @@ const store = new Vuex.Store({
       commit("UPDATE_DAILY", payload);
     },
     fetchFirestoreData({ commit, state }, authUserData) {
-      console.log(
+      /*console.log(
         "fetching data from firestore..",
         "collection:",
         authUserData.user.email
-      );
+      );*/
       if (!authUserData.user.displayName) {
         authUserData.user.displayName = authUserData.user.email;
       }
@@ -292,7 +299,7 @@ const store = new Vuex.Store({
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
-            console.log(doc.data(), doc.id);
+            //console.log(doc.data(), doc.id);
             const dailydata = doc.data();
             dailydata.id = doc.id;
             commit("SETDAILY", dailydata);

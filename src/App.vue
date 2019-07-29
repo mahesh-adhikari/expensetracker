@@ -26,8 +26,8 @@ export default {
       authenticated: false,
       showLoader: false,
       mockAccount: {
-        username: "Mahesh",
-        password: "letmein"
+        username: "demo",
+        password: "etdemo123"
       }
     };
   },
@@ -38,7 +38,7 @@ export default {
       
       this.$router.push("/login");
     } else {
-      console.log(this.$session.getAll());  
+      //console.log(this.$session.getAll());  
       if(this.fetched_fb_data == false){
         this.$store.dispatch(
               "fetchFirestoreData",
@@ -49,6 +49,7 @@ export default {
   },
   methods: {
     logout() {
+      this.$store.dispatch("clearStore");
       this.authenticated = false;
       this.$session.destroy();
       this.$router.push("/login");
