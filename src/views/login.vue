@@ -38,6 +38,8 @@
 				</div>
 			</div>
 			<div class="col-lg-4 col-sm-3 col-xs-2"></div>
+      <div class="spinner-border text-warning" :class="{'d-none': !showloader}" style="position:fixed;left:50%;top:30%;">      
+      </div>
 		</div>
 	</div>
 </template>
@@ -50,6 +52,7 @@ export default {
   data() {
     return {
       loginerror: false,
+      showloader: false,
       input: {
         username: "",
         password: ""
@@ -57,7 +60,6 @@ export default {
     };
   },
   beforeCreate() {
-    console.log("login beforeCreate");
     if (this.$session.exists()) {
       this.$session.destroy();
       this.$parent.authenticated = false;
@@ -65,6 +67,7 @@ export default {
   },
   methods: {
     login() {
+      this.showloader = true;
       if (this.input.username != "" && this.input.password != "") {
         if (
           this.input.username == this.$parent.mockAccount.username &&
@@ -84,6 +87,7 @@ export default {
             "fetchFirestoreData",
             "bOY37ft6NdeuqsbLx54td0qfxdf1"
           );
+          this.showloader = false;
           this.$router.push("/dashboard");
           this.loginerror = false;
         } else {
@@ -94,6 +98,7 @@ export default {
       } else {
         console.log("A username and password must be present");
         this.loginerror = true;
+        this.showloader = false;
       }
     },
     emailLogin(email, password) {
@@ -120,10 +125,12 @@ export default {
           var errorMessage = error.message;
           alert(errorCode, ":", errorMessage);
           this.loginerror = true;
+          this.showloader = false;
         });
     },
     googleLogin() {
       //console.log("Working on Google login feature")
+      this.showloader = true;
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase
         .auth()
@@ -151,7 +158,8 @@ export default {
           var errorCode = error.code;
           var errorMessage = error.message;
           this.loginerror = true;
-          alert("Error!\n" + errorMessage);
+          this.showloader = false;
+          alert("Error!!\n" + errorMessage);
         });
     }
   }

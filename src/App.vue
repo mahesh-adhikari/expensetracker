@@ -6,6 +6,8 @@
     <div class="container-fluid">
       <router-view></router-view>
     </div>
+    <div class="spinner-border text-warning" :class="{'d-none': !showLoader}" style="position:fixed;left:50%;top:30%;">      
+    </div>
   </div>
 </template>
 
@@ -22,6 +24,7 @@ export default {
   data() {
     return {
       authenticated: false,
+      showLoader: false,
       mockAccount: {
         username: "Mahesh",
         password: "letmein"
